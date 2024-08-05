@@ -1,0 +1,18 @@
+pratikshya;ABC124;1;10
+pratikshya;1;1;10
+pratikshya;JHR1610;1;10
+pratikshya;DAT9372;12;120
+Invoice Date: 2024-07-26
+Invoice Number: 41
+Customer Name: pikachu
+Car Number: JHR1609
+Rental Hours: 24
+Rental Amount: 240
+-----------------------
+pikachu;JHR1609;24;240
+Pratikshya;JIM111;1;10
+radha;JHR1610;1;10
+pp;DAT9372;12;120
+pl;JHR1610;12;120
+q;JHR1610;24;240;41
+ssa;12;12;120;41
