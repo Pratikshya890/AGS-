@@ -17,6 +17,7 @@ const string welcomeFile = "welcome.txt";
 // Function prototypes
 void displayWelcomeMessage();
 void adminMenuActions();
+void adminMenu();
 void usermenu();
 void userMenu();
 void addAdmin();
@@ -25,6 +26,8 @@ void addCar();
 void deleteCar();
 void resetAvailableCars();
 void loginAdmin();
+void registerAdmin();
+void AdminforgotPassword();
 void loginUser();
 void registerUser();
 void forgotPassword();
@@ -38,17 +41,23 @@ int main() {
 
     int choice;
     do {
-        cout << "\n--- Main Menu ---\n";
-        cout << "1. Admin Login\n";
-        cout << "2. User Login\n";
-        cout << "3. Exit\n";
-        cout << "Enter your choice: ";
+        cout << "\n               \t\t\t\t  --- Main Menu ---\n\n";
+       
+        cout << setw(60) << "    |------------------|" << endl;
+        cout << setw(60) << "1.|   Admin Login    |" << endl;
+        cout << setw(60) << "  |------------------|" << endl;
+        cout << setw(60) << "2.|   User Login     |" << endl;
+        cout << setw(60) << "  |------------------|" << endl;
+        cout << setw(60) << "3.|   Exit           |" << endl;
+        cout << setw(60) << "  |------------------|" << endl;
+      
+        cout << "\n\nEnter your choice: ";
         cin >> choice;
         cin.ignore(); // To ignore the newline character left by previous input
 
         switch (choice) {
         case 1:
-            adminMenuActions();
+            adminMenu();
             break;
         case 2:
             userMenu();
@@ -84,14 +93,26 @@ void displayWelcomeMessage() {
 void adminMenuActions() {
     int choice;
     do {
-        cout << "\n--- Admin Menu ---\n";
-        cout << "1. Add Admin\n";
-        cout << "2. Show Data\n";
-        cout << "3. Add Car\n";
-        cout << "4. Delete Car\n";
-        cout << "5. Reset Available Cars\n";
-        cout << "6. Log Off\n";
-        cout << "Enter your choice: ";
+      
+
+        cout << "\n--------------------------------------------\n";
+        cout << "|                Admin Menu                |\n";
+        cout << "--------------------------------------------\n";
+        cout << "| 1.    Add Admin                          |\n";
+        cout << "|------------------------------------------|\n";
+        cout << "| 2.    Show Data                          |\n";
+        cout << "|------------------------------------------|\n";
+        cout << "| 3.    Add Car                            |\n";
+        cout << "|------------------------------------------|\n";
+        cout << "| 4.    Delete Car                         |\n";
+        cout << "|------------------------------------------|\n";
+        cout << "| 5.    Reset Available Cars               |\n";
+        cout << "|------------------------------------------|\n";
+        cout << "| 6.    Log Off                            |\n";
+        cout << "--------------------------------------------\n";
+        
+        
+        cout << "\n\nEnter your choice: ";
         cin >> choice;
         cin.ignore(); // To ignore the newline character left by previous input
 
@@ -103,7 +124,7 @@ void adminMenuActions() {
             showData();
             break;
         case 3:
-            addCar();
+                addCar();
             break;
         case 4:
             deleteCar();
@@ -125,11 +146,16 @@ void adminMenuActions() {
 void usermenu() {
     int choice;
     while (true) {
-        cout << "\nUser Menu:\n";
-        cout << "1. Rent a Car\n";
-        cout << "2. View Rental Records\n";
-        cout << "3. Exit\n";
-        cout << "Enter choice: ";
+        cout << "\n--------------------------------------\n";
+        cout << "|             User Menu              |\n";
+        cout << "--------------------------------------\n";
+        cout << "| 1.   Rent a Car                    |\n";
+        cout << "|------------------------------------|\n";
+        cout << "| 2.   View Rental Records           |\n";
+        cout << "|------------------------------------|\n";
+        cout << "| 3.   Exit                          |\n";
+        cout << "--------------------------------------\n";
+        cout << "\n\nEnter choice: ";
         cin >> choice;
         cin.ignore(); // To ignore the newline character left by previous input
 
@@ -151,10 +177,49 @@ void usermenu() {
 
 
 
+// Function to handle admin menu
+void adminMenu() {
+    int choice;
+    while (true) {
+        cout << "\n\t    Admin Menu:\n\n";
+        cout << "  |------------------------------|\n";
+        cout << "1.|            Login             |\n";
+        cout << "  |------------------------------|\n";
+        cout << "2.|           Register           |\n";
+        cout << "  |------------------------------|\n";
+        cout << "3.|       Forgot Password        |\n";
+        cout << "  |------------------------------|\n";
+        cout << "4.|            Exit              |\n";
+        cout << "  |------------------------------|\n";
+
+
+        cout << "\n\nEnter choice: ";
+        cin >> choice;
+        cout << endl;
+
+        switch (choice) {
+        case 1:
+            loginAdmin();
+            break;
+        case 2:
+            registerAdmin();
+            break;
+        case 3:
+            AdminforgotPassword();
+            break;
+        case 4:
+            return;
+        default:
+            cout << "Invalid choice. Please try again.\n";
+            break;
+        }
+    }
+}
+
 // Function to handle admin login
 void loginAdmin() {
     string username, password;
-    cout << "Enter admin username: ";
+    cout << "Enter username: ";
     cin >> username;
     cout << "Enter password: ";
 
@@ -196,16 +261,81 @@ void loginAdmin() {
     cout << "Invalid username or password.\n";
 }
 
+// Function to handle admin registration
+void registerAdmin() {
+    string username, password;
+    cout << "Enter new username: ";
+    cin >> username;
+    cout << "Enter new password: ";
+
+    // Hide password input
+    password = "";
+    char ch;
+    while ((ch = _getch()) != '\r') {
+        if (ch == '\b') {
+            if (password.length() > 0) {
+                password.pop_back();
+                cout << "\b \b"; // Erase the last star
+            }
+        }
+        else {
+            password += ch;
+            cout << '*'; // Show a star for each character
+        }
+    }
+    cout << endl;
+
+    // Append to admin file
+    ofstream file(adminFile, ios::app);
+    if (file.is_open()) {
+        file << username << ";" << password << endl;
+        file.close();
+        cout << "Admin registered successfully.\n";
+    }
+    else {
+        cout << "Failed to open Admin file.\n";
+    }
+}
+
+// Function to handle forgotten password
+void AdminforgotPassword() {
+    string username;
+    cout << "Enter your username: ";
+    cin >> username;
+
+    ifstream file(adminFile);
+    if (file.is_open()) {
+        string line;
+        while (getline(file, line)) {
+            size_t delimiterPos = line.find(';');
+            if (delimiterPos != string::npos) {
+                string storedUsername = line.substr(0, delimiterPos);
+                if (storedUsername == username) {
+                    cout << "Password reset functionality is not implemented.\n";
+                    file.close();
+                    return;
+                }
+            }
+        }
+        file.close();
+    }
+    cout << "Username not found.\n";
+}
+
 // Function to handle user menu
 void userMenu() {
     int choice;
     while (true) {
-        cout << "\nUser Menu:\n";
-        cout << "1. Login\n";
-        cout << "2. Register\n";
-        cout << "3. Forgot Password\n";
-        cout << "4. Exit\n";
-        cout << "Enter choice: ";
+        cout << "\n\t    User Menu:\n\n";
+        cout << "  |------------------------------|\n";
+        cout << "1.|            Login             |\n";
+        cout << "  |------------------------------|\n";
+        cout << "2.|           Register           |\n";
+        cout << "  |------------------------------|\n";
+        cout << "3.|       Forgot Password        |\n";
+        cout << "  |------------------------------|\n";
+        cout << "4.|            Exit              |\n";
+        cout << "  |------------------------------|\n\n";
         cin >> choice;
         cout << endl;
 
@@ -354,7 +484,7 @@ void rentCar() {
         cout << "Failed to open available cars file.\n";
     }
 
-    cout << "Enter Plate number to rent: ";
+    cout << "\n\nEnter Plate number to rent: ";
     cin >> carNumber;
 
     cout << "Enter your name: ";
@@ -365,9 +495,15 @@ void rentCar() {
     cin >> rentalHours;
 
     // Calculate rent fee (assuming a fixed rate for simplicity)
-    int rentFee = rentalHours * 10; // Example rate: 10 $per hour
+  
+    const double ratePerHourNPR = 1000.0; // Example rate: 1200 NPR per hour
 
-    int invoiceNumber = rand() % 10000;
+    double rentFee = rentalHours * ratePerHourNPR;
+
+    // Seed the random number generator
+    srand(static_cast<unsigned int>(time(0)));
+
+    int invoiceNumber = rand() % 100;
 
     // Generate and print invoice
     printInvoice(customerName, carNumber, "WAJA 1.6", rentalHours, rentFee, invoiceNumber);
@@ -375,7 +511,7 @@ void rentCar() {
     // Record rental
     ofstream rentalFile(rentalRecordsFile, ios::app);
     if (rentalFile.is_open()) {
-        rentalFile << customerName << ";" << carNumber << ";" << rentalHours << ";" << rentFee << ";" << invoiceNumber<< endl;
+        rentalFile << customerName << ";" << carNumber << ";" << rentalHours << ";"<< rentFee << ";" << invoiceNumber << endl;
         rentalFile.close();
         cout << "Car rented successfully.\n";
     }
@@ -391,14 +527,18 @@ void printInvoice(const string& customerName, const string& carNumber, const str
     tm localTime;
     localtime_s(&localTime, &now);
     
-    cout << "\n--- Invoice ---\n";
-    cout << "Date: " << put_time(&localTime, "%Y-%m-%d") << endl;
-    cout << "Invoice Number: " << invoiceNumber << endl; // Random invoice number for example
-    cout << "Customer Name: " << customerName << endl;
-    cout << "Car Model: " << carModel << endl;
-    cout << "Car Number: " << carNumber << endl;
-    cout << "Number of Hours: " << rentalHours << endl;
-    cout << "Rental Amount: $" << rentFee << endl;
+    cout << "\n--------------------------------------------\n";
+    cout << "|                 Invoice                  |\n";
+    cout << "--------------------------------------------\n";
+    cout << "| Date:            " << put_time(&localTime, "%Y-%m-%d") << "              |\n";
+    cout << "| Invoice Number:  " << setw(24) << left << invoiceNumber << "|\n";
+    cout << "| Customer Name:   " << setw(24) << left << customerName << "|\n";
+    cout << "| Car Model:       " << setw(24) << left << carModel << "|\n";
+    cout << "| Car Number:      " << setw(24) << left << carNumber << "|\n";
+    cout << "| Number of Hours: " << setw(24) << left << rentalHours << "|\n";
+    cout << "| Rental Amount:   RS." << setw(23) << left << rentFee << "|\n";
+    cout << "--------------------------------------------\n\n";
+
     cout << "Thank you for renting with us!\n";
 }
 
@@ -453,23 +593,29 @@ void showData() {
     }
 }
 
+
+
+
 void addCar() {
+
     string plateNumber, brand, model, color, transmission;
-    int capacity, ratePerHour, ratePer12Hours, ratePer24Hours;
+    int capacity = 0, ratePerHour = 0, ratePer12Hours = 0, ratePer24Hours = 0;
 
     cout << "Enter car details:\n";
     cout << "Plate Number: ";
-    cin >> plateNumber;
+    cin >> ws; // Clear leading whitespace
+    getline(cin, plateNumber);
     cout << "Brand: ";
-    cin >> brand;
+    getline(cin, brand);
     cout << "Model: ";
-    cin >> model;
+    getline(cin, model);
     cout << "Capacity: ";
     cin >> capacity;
     cout << "Color: ";
-    cin >> color;
+    cin >> ws; // Clear leading whitespace
+    getline(cin, color);
     cout << "Transmission: ";
-    cin >> transmission;
+    getline(cin, transmission);
     cout << "Rate per hour: ";
     cin >> ratePerHour;
     cout << "Rate per 12 hours: ";
