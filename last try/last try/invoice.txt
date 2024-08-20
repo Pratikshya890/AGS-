@@ -1,8 +1,1 @@
-Invoice Date: 26/7/2024
-Invoice Number: 42
-Customer Name: pratikshya
-Car Model: Unknown Model
-Car Number: 1
-Rental Hours: 1
-Rental Amount: $10
-------------------------------
+
